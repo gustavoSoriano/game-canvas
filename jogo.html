@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<style>
+			canvas{
+				position:absolute;
+				top:0px;
+				bottom: 0px;
+				left:0px;
+				right:0px;
+				margin:auto;
+			}
+		</style>
+		<script src="sprite.js" ></script>
+		<script src="samurai.js" ></script>
+		<script src="chao.js" ></script>
+		<script src="score.js" ></script>
+		<script src="pedras.js" ></script>
+	</head>
+
+	<body>
+		<script>
+			var canvas, ctx, ALTURA, LARGURA, velocidade=9, estadoAtual
+
+			let estados ={
+				jogar:0,
+				jogando:1,
+				perdeu:2
+			}
+
+			function clique(event)
+			{
+				if(estadoAtual == estados.jogando){
+					samurai.pula()
+				}
+				else if(estadoAtual == estados.jogar){
+					estadoAtual = estados.jogando
+				}
+				else if(estadoAtual == estados.perdeu){
+					estadoAtual = estados.jogar
+					pedras.limpa()
+					samurai.reset()
+					score.value=0
+				}
+			}
+
+
+
+			function createCanvas()
+			{
+				canvas       = document.createElement("canvas")
+				canvas.width = LARGURA
+				canvas.height= ALTURA
+				ctx          = canvas.getContext("2d")
+				document.body.appendChild(canvas)
+				canvas.addEventListener("mousedown", clique)
+			}
+
+
+			function main()
+			{
+				LARGURA     = window.innerWidth
+				ALTURA      = window.innerHeight
+				createCanvas()
+				estadoAtual = estados.jogar
+				roda()
+			}
+
+			function roda()
+			{
+				atualiza()
+				desenha()
+				window.requestAnimationFrame(roda)
+			}
+
+
+			/*
+				método que aciona mudanças de status nos objetos
+			*/
+			function atualiza()
+			{
+				samurai.atualiza()
+				if(estadoAtual == estados.jogando) {
+					pedras.atualiza()
+					score.alteraVelocidade()
+				}
+			}
+
+
+
+			function desenha()
+			{
+				bg.desenha(0,0)
+				score.desenha()
+
+				if(estadoAtual == estados.jogar){
+					inicio.desenha(LARGURA/2 - (inicio.largura/2), ALTURA/2 - (inicio.altura/2))
+				}
+				else if(estadoAtual == estados.perdeu){
+					spriteGameover.desenha(LARGURA/2 - (spriteGameover.largura/2), ALTURA/2 - (spriteGameover.altura/2))
+					score.translate()
+				}
+				else if(estadoAtual == estados.jogando){
+					pedras.desenha()
+				}
+
+				chao.desenha()
+				samurai.desenha()
+			}
+			main()
+		</script>
+	</body>
+</html>
