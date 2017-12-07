@@ -1,6 +1,8 @@
 # Game-canvas
 ### Um simples jogo em canvas e javascript nativo
 
+[Demo](https://gustavosoriano.github.io/game-canvas/)
+
 ```
 Possui conceitos básicos porém importantes para criação e desenvolvimento de jogos utilizando canvas
 ```
