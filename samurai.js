@@ -7,7 +7,7 @@ samurai = {
 	velocidadeQueda:0,
 	forcaDoPulo:25.6,
 	qntPulos:0,
-	maxPulos:2,
+	maxPulos:3,
 	indexBoneco:0,
 	trocaSprite: 5,
 
